@@ -4,23 +4,30 @@ namespace EFCoreEncapsulation.Api;
 
 public class Program
 {
-    public static void Main(string[] args)
-    {
-        var builder = WebApplication.CreateBuilder(args);
+	public static void Main(string[] args)
+	{
+		var builder = WebApplication.CreateBuilder(args);
 
-        // Add services to the container
-        
-        builder.Services.AddDbContext<SchoolContext>(
-            options => options.UseSqlServer(builder.Configuration["ConnectionString"]));
+		builder.Services
+			.AddScoped(_ => new SchoolContext(builder.Configuration["ConnectionString"], true))
+			.AddControllers();
+		
+		// regular config 
+		// builder.Services.AddDbContext<SchoolContext>(options =>
+		// options
+		// 	.UseSqlServer(builder.Configuration["ConnectionString"])
+		// 	.UseLoggerFactory(LoggerFactory.Create(b =>
+		// 	.EnableSensitiveDataLogging());
+		// builder.Services.AddControllers();
 
-        builder.Services.AddControllers();
+		var app = builder.Build();
 
-        var app = builder.Build();
+		// Configure the HTTP request pipeline
 
-        // Configure the HTTP request pipeline
+		app.MapControllers();
 
-        app.MapControllers();
+		app.Run();
+	}
 
-        app.Run();
-    }
+	
 }
