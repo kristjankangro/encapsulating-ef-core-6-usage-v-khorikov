@@ -10,6 +10,7 @@ public class Program
 
 		builder.Services
 			.AddScoped(_ => new SchoolContext(builder.Configuration["ConnectionString"], true))
+			.AddTransient<StudentRepository>() //creates instance for each request
 			.AddControllers();
 		
 		// regular config 
