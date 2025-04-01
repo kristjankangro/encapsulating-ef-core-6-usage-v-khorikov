@@ -1,6 +1,6 @@
 using EFCoreEncapsulation.Api.Repositories;
 
-namespace EFCoreEncapsulation.Api;
+namespace EFCoreEncapsulation.Api.Courses;
 
 public class CourseRepository : Repository<Course>
 {

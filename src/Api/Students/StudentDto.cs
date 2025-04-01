@@ -1,4 +1,7 @@
-﻿namespace EFCoreEncapsulation.Api;
+﻿using EFCoreEncapsulation.Api.Courses;
+using EFCoreEncapsulation.Api.Sports;
+
+namespace EFCoreEncapsulation.Api.Students;
 
 public class StudentDto
 {
@@ -18,7 +21,7 @@ public static class StudentExtensions
 			StudentId = student.Id,
 			Name = student.Name,
 			Email = student.Email,
-			Enrollments = student.Enrollments.Select(e => e.ToDto()).ToList(),
+			Enrollments = student.Enrollments.Select(x => x.ToDto()).ToList(),
 			SportsEnrollments = student.SportsEnrollments.Select(x=> x.ToDto()).ToList()
 		};
 }

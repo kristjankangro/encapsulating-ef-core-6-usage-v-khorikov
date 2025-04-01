@@ -1,4 +1,6 @@
-﻿namespace EFCoreEncapsulation.Api;
+﻿using EFCoreEncapsulation.Api.Students;
+
+namespace EFCoreEncapsulation.Api.Courses;
 
 public class Enrollment
 {

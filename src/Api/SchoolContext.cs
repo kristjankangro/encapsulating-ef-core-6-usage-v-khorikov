@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EFCoreEncapsulation.Api.Courses;
+using EFCoreEncapsulation.Api.Sports;
+using EFCoreEncapsulation.Api.Students;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace EFCoreEncapsulation.Api;
@@ -78,9 +81,9 @@ public sealed class SchoolContext : DbContext
             x.Property(p => p.Grade);
         });
         
-        modelBuilder.Entity<Sports>(x =>
+        modelBuilder.Entity<Sport>(x =>
         {
-	        x.ToTable("Sports").HasKey(k => k.Id);
+	        x.ToTable("Sport").HasKey(k => k.Id);
 	        x.Property(p => p.Id).HasColumnName("SportsID");
 	        x.Property(p => p.Name);
         });
@@ -90,9 +93,9 @@ public sealed class SchoolContext : DbContext
 	        x.ToTable("SportsEnrollment").HasKey(k => k.Id);
 	        x.Property(p => p.Id).HasColumnName("SportsEnrollmentID");
 	        x.HasOne(p => p.Student).WithMany(p => p.SportsEnrollments);
-	        x.HasOne(p => p.Sports).WithMany();
+	        x.HasOne(p => p.Sport).WithMany();
 	        x.Property(p => p.Grade);
-	        // x.Navigation(p => p.Sports).AutoInclude(); //eager include
+	        // x.Navigation(p => p.Sport).AutoInclude(); //eager include
         });
     }
 }

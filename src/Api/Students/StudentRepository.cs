@@ -1,6 +1,7 @@
+using EFCoreEncapsulation.Api.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace EFCoreEncapsulation.Api.Repositories;
+namespace EFCoreEncapsulation.Api.Students;
 
 public class StudentRepository : Repository<Student>
 {
@@ -8,14 +9,15 @@ public class StudentRepository : Repository<Student>
 	{
 	}
 
-	//uses auto include in model
-	public override Student GetById(long id)
+	public Student GetById(StudentSpec spec)
 	{
-		var student = _context.Students.Find(id);
+		var student = _context.Students.Find(spec.Id);
 		if (student == null) return null;
 
-		_context.Entry(student).Collection(s => s.Enrollments).Load();
-		_context.Entry(student).Collection(s => s.SportsEnrollments).Load();
+		if (spec.WithEnrollments) 
+			_context.Entry(student).Collection(s => s.Enrollments).Load();
+		if (spec.WithSportEnrollments) 
+			_context.Entry(student).Collection(s => s.SportsEnrollments).Load();
 
 		return student;
 	}
@@ -26,7 +28,7 @@ public class StudentRepository : Repository<Student>
 			.Include(s => s.Enrollments)
 			.ThenInclude(e => e.Course)
 			.Include(s => s.SportsEnrollments)
-			.ThenInclude(s => s.Sports)
+			.ThenInclude(s => s.Sport)
 			.AsSplitQuery()
 			.SingleOrDefault(s => s.Id == id);
 

@@ -1,4 +1,4 @@
-namespace EFCoreEncapsulation.Api;
+namespace EFCoreEncapsulation.Api.Sports;
 
 public class SportsEnrollmentDto
 {
@@ -14,7 +14,7 @@ public static class SportsEnrollmentDtoExtensions
 		new()
 		{
 			Grade = enrollment.Grade.ToString(),
-			Sports = enrollment.Sports.Name,
+			Sports = enrollment.Sport.Name,
 			Student = enrollment.Student.Name
 		};
 }

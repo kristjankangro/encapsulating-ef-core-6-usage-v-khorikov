@@ -1,6 +1,6 @@
-namespace EFCoreEncapsulation.Api;
+namespace EFCoreEncapsulation.Api.Sports;
 
-public class Sports
+public class Sport
 {
 	public long Id { get; set; }
 	public string Name { get; set; }
