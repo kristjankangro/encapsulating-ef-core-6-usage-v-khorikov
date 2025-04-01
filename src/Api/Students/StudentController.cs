@@ -24,6 +24,20 @@ public class StudentController : ControllerBase
 		_courseRepo = courseRepo;
 	}
 
+	[HttpGet]
+	public IReadOnlyList<StudentDto> GetAll()
+	{
+		return _studentRepo
+			.GetAll(true)
+			.Select(MapToDto)
+			.ToList();
+	}
+
+	private StudentDto MapToDto(Student student)
+	{
+		return null;
+	}
+
 	[HttpGet("{id:long}")]
 	public StudentDto Get(long id)
 	{

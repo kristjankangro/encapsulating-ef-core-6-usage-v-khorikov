@@ -8,19 +8,20 @@ public static class ModelBuilderExtensions
 {
 	public static ModelBuilder ApplyModelConfigurationsFromAssembly(this ModelBuilder modelBuilder, Assembly assembly)
 	{
-		var applyGenericMethod = typeof(ModelBuilder).GetMethods()
-			.First(m => m.Name == nameof(ModelBuilder.ApplyConfiguration) && m.GetParameters().Any(p => p.ParameterType.GetGenericTypeDefinition() == typeof(IEntityTypeConfiguration<>)));
-
 		var configurations = assembly.GetTypes()
-			.Where(t => t.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IEntityTypeConfiguration<>)))
+			.Where(t => t.GetInterfaces()
+				.Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IEntityTypeConfiguration<>)))
+			.Select(Activator.CreateInstance)
 			.ToList();
 
-		foreach (var config in configurations)
+		foreach (var configuration in configurations)
 		{
-			var entityType = config.GetInterfaces().First().GetGenericArguments().First();
-			var applyConcreteMethod = applyGenericMethod.MakeGenericMethod(entityType);
-			var configurationInstance = Activator.CreateInstance(config);
-			applyConcreteMethod.Invoke(modelBuilder, new[] { configurationInstance });
+			var entityType = configuration.GetType().GetInterfaces().First().GetGenericArguments().First();
+			var applyConfigMethod = typeof(ModelBuilder)
+				.GetMethod(
+					nameof(ModelBuilder.ApplyConfiguration),
+					[typeof(IEntityTypeConfiguration<>).MakeGenericType(entityType)]);
+			applyConfigMethod?.Invoke(modelBuilder, [configuration]);
 		}
 
 		return modelBuilder;

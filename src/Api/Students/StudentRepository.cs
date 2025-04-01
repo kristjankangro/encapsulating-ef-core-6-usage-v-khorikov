@@ -12,6 +12,16 @@ public class StudentRepository : Repository<Student>
 	{
 	}
 
+	public IReadOnlyList<Student> GetAll(bool something)
+	{
+		IQueryable<Student> query = _context.Set<Student>();
+		if (something)
+		{
+			query = query.Where(x => x.Email.EndsWith("mwrit.ee"));
+		}
+		return query.ToList();
+	}
+
 	public StudentDto GetDto(long id)
 	{
 		var student = _context.Set<Student>().Find(id);
