@@ -20,7 +20,7 @@ public class StudentRepository : Repository<Student>
 		List<EnrollmentData> enrollments = _context.Set<EnrollmentData>()
 			.FromSqlInterpolated($@"
 				SELECT e.StudentID, e.Grade, c.Name as Course
-				FROM dbo.Enrollments e
+				FROM dbo.Enrollment e
 				inner join dbo.Course c on c.CourseID = e.CourseID
 				WHERE StudentId = {id}")
 			.ToList();
