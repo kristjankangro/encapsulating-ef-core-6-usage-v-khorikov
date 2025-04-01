@@ -1,22 +1,19 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace EFCoreEncapsulation.Api;
+namespace EFCoreEncapsulation.Api.Repositories;
 
-public class StudentRepository
+public class StudentRepository : Repository<Student>
 {
-	private readonly SchoolContext _context;
-
-	public StudentRepository(SchoolContext context)
+	public StudentRepository(SchoolContext context) : base(context)
 	{
-		_context = context;
 	}
 
 	//uses auto include in model
-	public Student Get(long id)
+	public override Student GetById(long id)
 	{
 		var student = _context.Students.Find(id);
 		if (student == null) return null;
-		
+
 		_context.Entry(student).Collection(s => s.Enrollments).Load();
 		_context.Entry(student).Collection(s => s.SportsEnrollments).Load();
 
@@ -34,6 +31,12 @@ public class StudentRepository
 			.SingleOrDefault(s => s.Id == id);
 
 		return student;
+	}
+
+	public override void Save(Student student)
+	{
+		_context.Students.Add(student);
+		// if (_context.ChangeTracker.HasChanges()) _context.SaveChanges();
 	}
 
 	// public Student Get(long id) => _context.Students.Find(id);
