@@ -14,7 +14,7 @@ public static class SportsEnrollmentDtoExtensions
 		new()
 		{
 			Grade = enrollment.Grade.ToString(),
-			Sports = enrollment.Sport.Name,
+			Sports = enrollment.SportId.ToString(), //todo name needed here
 			Student = enrollment.Student.Name
 		};
 }

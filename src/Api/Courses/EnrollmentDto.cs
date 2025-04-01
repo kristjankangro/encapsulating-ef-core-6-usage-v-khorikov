@@ -1,3 +1,5 @@
+using EFCoreEncapsulation.Api.Contexts;
+
 namespace EFCoreEncapsulation.Api.Courses;
 
 public class EnrollmentDto
@@ -7,12 +9,12 @@ public class EnrollmentDto
 	
 }
 
-public static class EnrollmentDtoExtensions
-{
-	public static EnrollmentDto ToDto(this Enrollment enrollment) =>
-		new()
-		{
-			Grade = enrollment.Grade.ToString(),
-			Course = enrollment.Course.Name
-		};
-}
+// public static class EnrollmentDtoExtensions
+// {
+// 	public static EnrollmentDto ToDto(EnrollmentData enrollment) =>
+// 		new()
+// 		{
+// 			Grade = enrollment.Grade.ToString(),
+// 			Course = enrollment.Course
+// 		};
+// }

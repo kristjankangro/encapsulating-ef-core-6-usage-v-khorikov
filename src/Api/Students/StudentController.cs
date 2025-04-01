@@ -1,5 +1,6 @@
 using EFCoreEncapsulation.Api.Courses;
 using EFCoreEncapsulation.Api.Repositories;
+using EFCoreEncapsulation.Api.Shared;
 using EFCoreEncapsulation.Api.Students;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,9 +26,7 @@ public class StudentController : ControllerBase
 	[HttpGet("{id:long}")]
 	public StudentDto Get(long id)
 	{
-		var student = _studentRepo.GetById(StudentSpec.All(id));
-		
-		return student?.ToDto();
+		return _studentRepo.GetDto(id);
 	}
 
 	[HttpPost]

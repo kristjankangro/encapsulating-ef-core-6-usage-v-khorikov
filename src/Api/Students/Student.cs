@@ -1,4 +1,5 @@
 ﻿using EFCoreEncapsulation.Api.Courses;
+using EFCoreEncapsulation.Api.Shared;
 using EFCoreEncapsulation.Api.Sports;
 
 namespace EFCoreEncapsulation.Api.Students;
@@ -13,14 +14,14 @@ public class Student
 
 	public string EnrollIn(Course course, Grade grade)
 	{
-		if (Enrollments.Any(x => x.Course == course))
+		if (Enrollments.Any(x => x.CourseId == course.Id))
 		{
 			return "Already enrolled in this course";
 		}
 
 		var enrollment = new Enrollment
 		{
-			Course = course,
+			CourseId = course.Id,
 			Student = this,
 			Grade = grade
 		};

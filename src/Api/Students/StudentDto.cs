@@ -21,7 +21,7 @@ public static class StudentExtensions
 			StudentId = student.Id,
 			Name = student.Name,
 			Email = student.Email,
-			Enrollments = student.Enrollments.Select(x => x.ToDto()).ToList(),
-			SportsEnrollments = student.SportsEnrollments.Select(x=> x.ToDto()).ToList()
+			// Enrollments = student.Enrollments.Select(x => x.ToDto()).ToList(),
+			// SportsEnrollments = student.SportsEnrollments.Select(x=> x.ToDto()).ToList()
 		};
 }
