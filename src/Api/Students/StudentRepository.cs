@@ -14,7 +14,7 @@ public class StudentRepository : Repository<Student>
 
 	public StudentDto GetDto(long id)
 	{
-		var student = _context.Students.Find(id);
+		var student = _context.Set<Student>().Find(id);
 		if (student == null) return null;
 
 		List<EnrollmentData> enrollments = _context.Set<EnrollmentData>()
@@ -40,7 +40,7 @@ public class StudentRepository : Repository<Student>
 
 	public override Student GetById(long id)
 	{
-		var student = _context.Students.Find(id);
+		var student = _context.Set<Student>().Find(id);
 		if (student == null) return null;
 
 		_context.Entry(student).Collection(s => s.Enrollments).Load();
@@ -77,7 +77,7 @@ public class StudentRepository : Repository<Student>
 
 	public override void Save(Student student)
 	{
-		_context.Students.Add(student);
+		_context.Set<Student>().Add(student);
 		// if (_context.ChangeTracker.HasChanges()) _context.SaveChanges();
 	}
 

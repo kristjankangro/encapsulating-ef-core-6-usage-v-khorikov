@@ -1,3 +1,4 @@
+using EFCoreEncapsulation.Api.Contexts;
 using EFCoreEncapsulation.Api.Courses;
 using EFCoreEncapsulation.Api.Repositories;
 using EFCoreEncapsulation.Api.Students;

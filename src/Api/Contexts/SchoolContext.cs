@@ -1,19 +1,19 @@
-﻿using EFCoreEncapsulation.Api.Contexts;
-using EFCoreEncapsulation.Api.Courses;
+﻿using EFCoreEncapsulation.Api.Courses;
 using EFCoreEncapsulation.Api.Sports;
 using EFCoreEncapsulation.Api.Students;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-namespace EFCoreEncapsulation.Api;
+namespace EFCoreEncapsulation.Api.Contexts;
 
 public sealed class SchoolContext : DbContext
 {
 	private readonly string _connectionString;
 	private readonly bool _useConsoleLogger;
-	public DbSet<Student> Students { get; set; }
-	public DbSet<Course> Courses { get; set; }
-	public DbSet<Enrollment> Enrollments { get; set; }
+	
+	//abstraction principle violation
+	// public DbSet<Student> Students { get; set; }
+	// public DbSet<Course> Courses { get; set; }
+	// public DbSet<Enrollment> Enrollments { get; set; }
 
 	public SchoolContext(string connectionString, bool useConsoleLogger = false)
 	{

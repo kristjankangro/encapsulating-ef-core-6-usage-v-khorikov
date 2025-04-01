@@ -1,3 +1,4 @@
+using EFCoreEncapsulation.Api.Contexts;
 using EFCoreEncapsulation.Api.Repositories;
 
 namespace EFCoreEncapsulation.Api.Courses;
