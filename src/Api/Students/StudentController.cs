@@ -30,14 +30,14 @@ public class StudentController : ControllerBase
 		return _studentRepo.GetDto(id);
 	}
 
-	[HttpPost]
+	[HttpPost("register")]
 	public void Register()
 	{
 		var student = new Student();
 		_studentRepo.Save(student);
 	}
 	
-	[HttpPost]
+	[HttpPost("enroll")]
 	public string Enroll(long studentId, long courseId, Grade grade)
 	{
 		var student = _studentRepo.GetById(studentId);
@@ -51,7 +51,7 @@ public class StudentController : ControllerBase
 		return result;
 	}
 	
-	[HttpPost]
+	[HttpPost("update")]
 	public string EditPersonalInfo(long studentId, string name, string email)
 	{
 		var student = _studentRepo.GetById(studentId);
