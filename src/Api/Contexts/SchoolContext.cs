@@ -1,4 +1,6 @@
-﻿using EFCoreEncapsulation.Api.Courses;
+﻿using System.Reflection;
+using EFCoreEncapsulation.Api.Contexts.Models;
+using EFCoreEncapsulation.Api.Courses;
 using EFCoreEncapsulation.Api.Sports;
 using EFCoreEncapsulation.Api.Students;
 using Microsoft.EntityFrameworkCore;
@@ -24,17 +26,11 @@ public sealed class SchoolContext : DbContext
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 	{
 		optionsBuilder.UseSqlServer(_connectionString);
-		if (_useConsoleLogger)
-		{
-			optionsBuilder
-				.UseLoggerFactory(CreateLoggerFactory())
-				.EnableSensitiveDataLogging();
-		}
-		else
-		{
-			optionsBuilder.UseLoggerFactory(CreateEmptyLoggerFactory());
-		}
-
+		optionsBuilder.UseLoggerFactory(_useConsoleLogger 
+			? CreateLoggerFactory() 
+			: CreateEmptyLoggerFactory())
+			.EnableSensitiveDataLogging(_useConsoleLogger);
+		
 		base.OnConfiguring(optionsBuilder);
 	}
 
@@ -56,6 +52,9 @@ public sealed class SchoolContext : DbContext
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
+		modelBuilder
+			.ApplyModelConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+		
 		modelBuilder.Entity<Student>(x =>
 		{
 			x.ToTable("Student").HasKey(k => k.Id);
